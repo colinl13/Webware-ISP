@@ -13,6 +13,31 @@ const app = express()
 const { auth } = require('express-openid-connect');
 const { requiresAuth } = require('express-openid-connect');
 
+const { MongoClient, ServerApiVersion} = require('mongodb');
+const uri = process.env.MONGO_URI;
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+
+let infoCollection;
+
+// Function below will make sure server connects to mongo db before starting to listen
+async function initDB() {
+  try {
+    await client.connect()
+    const db = client.db('game')
+    infoCollection = db.collection('info')
+    console.log("Successfully connected.")
+  } catch (err) {
+    console.log("DB connection error: ", err)
+  }
+}
+
+initDB()
 
 // Middleware to parse JSON bodies
 app.use(express.json())
@@ -49,29 +74,3 @@ app.get('/profile', requiresAuth(), (req, res) => {
 app.listen(port, () => {
       console.log(`Server running on port ${port}`)
     })
-
-
-
-// Function below will make sure server connects to mongo db before starting to listen
-
-
-// // Start server after connecting to MongoDB
-// async function start() {
-//   try {
-//     console.log(`Connecting to MongoDB at ${mongoUri}, db: ${mongoDbName}`)
-//     const client = new MongoClient(mongoUri)
-//     await client.connect()
-//     const db = client.db(mongoDbName)
-//     todosCollection = db.collection("todos") 
-//     // Change/add name of collection as needed
-
-//     app.listen(process.env.PORT, () => {
-//       console.log(`Server running on port ${process.env.PORT}`)
-//     })
-//   } catch (error) {
-//     console.error("Failed to connect to MongoDB:", error)
-//     process.exit(1)
-//   }
-// }
-
-// start()
