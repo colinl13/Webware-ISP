@@ -57,10 +57,10 @@ const config = {
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
 
-// req.isAuthenticated is provided from the auth router
-app.get('/', (req, res) => {
-  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
-});
+// // req.isAuthenticated is provided from the auth router
+// app.get('/', (req, res) => {
+//   res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+// });
 
 // Route to serve the main HTML page; always render and let client show login/logout
 app.get("/", (request, response) => {
@@ -68,8 +68,8 @@ app.get("/", (request, response) => {
 })
 
 app.get('/profile', requiresAuth(), (req, res) => {
-  res.send(JSON.stringify(req.oidc.user));
-});
+  res.send(JSON.stringify(req.oidc.user))
+})
 
 app.listen(port, () => {
       console.log(`Server running on port ${port}`)
