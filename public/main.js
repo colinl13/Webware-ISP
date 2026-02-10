@@ -1,12 +1,20 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
 const startMenu = document.getElementById("start_menu")
+let showStartMenu = false
 
 const initStartMenu = function() {
-    
+    showStartMenu = true
+    const startButton = document.getElementById("start_button")
+    startButton.addEventListener("click", () => {
+        initGame()
+        startMenu.style.display = "none"
+        }
+    )
 }
 
 const initGame = function () {
+    showStartMenu = false
     const player = document.getElementById("player");
     const door = document.getElementById("door");
 
@@ -104,7 +112,10 @@ const initGame = function () {
 
         requestAnimationFrame(update)
     }
-
+    if (showStartMenu) {
+        startMenu.style.display = "block"
+        return
+    }
     update()
 }
 
