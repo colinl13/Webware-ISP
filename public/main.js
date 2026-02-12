@@ -4,6 +4,7 @@ const startMenu = document.getElementById("start_menu")
 // variable to determine whether start menu is shown or not
 let showStartMenu = false
 
+// Moved these to global scope so they can be accessed in all functions
 const player = document.getElementById("player");
 const door = document.getElementById("door");
 const floor = document.getElementById("floor")
@@ -29,6 +30,7 @@ const initStartMenu = function() {
         }
     )
 
+    // Determines whether to show login or logout button
     fetch('/api/auth-status')
     .then(r => r.json())
     .then(({ authenticated }) => {
@@ -45,16 +47,16 @@ const initStartMenu = function() {
       }
     })
 
-  if (loginButton) {
-    loginButton.onclick = () => {
-      window.location.href = '/login'
+    if (loginButton) {
+        loginButton.onclick = () => {
+        window.location.href = '/login'
+        }
     }
-  }
-  if (logoutButton) {
-    logoutButton.onclick = () => {
-      window.location.href = '/logout'
+    if (logoutButton) {
+        logoutButton.onclick = () => {
+        window.location.href = '/logout'
+        }
     }
-  }
 }
 
 const initGame = function () {
@@ -155,20 +157,20 @@ const initGame = function () {
         } else {
             door.style.backgroundColor = "black"
         }
-        // if (isColliding(playerRect,doorRect) && keys["SpaceBar"]){
-        //     showStartMenu = true;
-        // }
 
         requestAnimationFrame(update)
     }
-    if (showStartMenu) {
-        startMenu.style.display = "inline"
-        return
-    }
+    // If you are reading this, I will explain this part at our meeting!
+    // Also please show me how to use the keys[x] syntax]
+    // if (showStartMenu) {
+    //     startMenu.style.display = "inline"
+    //     return
+    // }
     update()
 }
 
 window.onload = function () {
+    // Show start menu on load
     initStartMenu()
     // initGame()
 }
