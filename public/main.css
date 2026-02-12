@@ -21,3 +21,12 @@
     width: 35px;
     background-color: black;
 }
+
+#start_menu { /* this is also the container for the start menu buttons */
+    position:static;
+    background-color: red;
+    width: 500px;
+    height: 500px;
+    align-content: center;
+    align-self: center;
+}

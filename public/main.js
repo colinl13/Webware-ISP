@@ -1,22 +1,39 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
 const startMenu = document.getElementById("start_menu")
+// variable to determine whether start menu is shown or not
 let showStartMenu = false
 
+const player = document.getElementById("player");
+const door = document.getElementById("door");
+const floor = document.getElementById("floor")
+
 const initStartMenu = function() {
+    // Start menu is shown
     showStartMenu = true
+
+    // Dont show off game elements yet
+    player.style.display = "none"
+    door.style.display = "none"
+    floor.style.display = "none"
+
+    // Get menu buttons
     const startButton = document.getElementById("start_button")
+
+    // Start game through menu
     startButton.addEventListener("click", () => {
-        initGame()
-        startMenu.style.display = "none"
+            initGame()
+            startMenu.style.display = "none"
         }
     )
 }
 
 const initGame = function () {
     showStartMenu = false
-    const player = document.getElementById("player");
-    const door = document.getElementById("door");
+    startMenu.style.display = "none";
+    player.style.display = "inline";
+    door.style.display = "inline";
+    floor.style.display = "inline";
 
     // Constants for moving
     const gravity = 0.6
@@ -109,11 +126,14 @@ const initGame = function () {
         } else {
             door.style.backgroundColor = "black"
         }
+        // if (isColliding(playerRect,doorRect) && keys["SpaceBar"]){
+        //     showStartMenu = true;
+        // }
 
         requestAnimationFrame(update)
     }
     if (showStartMenu) {
-        startMenu.style.display = "block"
+        startMenu.style.display = "inline"
         return
     }
     update()
