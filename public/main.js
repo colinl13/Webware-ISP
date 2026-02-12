@@ -19,6 +19,8 @@ const initStartMenu = function() {
 
     // Get menu buttons
     const startButton = document.getElementById("start_button")
+    const loginButton = document.getElementById("login_button")
+    const logoutButton = document.getElementById("logout_button")
 
     // Start game through menu
     startButton.addEventListener("click", () => {
@@ -26,6 +28,33 @@ const initStartMenu = function() {
             startMenu.style.display = "none"
         }
     )
+
+    fetch('/api/auth-status')
+    .then(r => r.json())
+    .then(({ authenticated }) => {
+      if (authenticated) {
+        if (logoutButton) 
+          logoutButton.style.display = 'inline-block'
+        if (loginButton) 
+          loginButton.style.display = 'none'
+      } else {
+        if (loginButton) 
+          loginButton.style.display = 'inline-block'
+        if (logoutButton) 
+          logoutButton.style.display = 'none'
+      }
+    })
+
+  if (loginButton) {
+    loginButton.onclick = () => {
+      window.location.href = '/login'
+    }
+  }
+  if (logoutButton) {
+    logoutButton.onclick = () => {
+      window.location.href = '/logout'
+    }
+  }
 }
 
 const initGame = function () {
