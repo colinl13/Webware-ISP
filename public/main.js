@@ -7,6 +7,7 @@ let showStartMenu = false
 // Moved these to global scope so they can be accessed in all functions
 const player = document.getElementById("player");
 const door = document.getElementById("door");
+const victoryScreen = document.getElementById("victory_screen")
 
 const initStartMenu = function() {
     // Start menu is shown
@@ -15,6 +16,7 @@ const initStartMenu = function() {
     // Dont show off game elements yet
     player.style.display = "none"
     door.style.display = "none"
+    victoryScreen.style.display = "none"
 
     // Get menu buttons
     const startButton = document.getElementById("start_button")
@@ -84,6 +86,7 @@ const initGame = function () {
     const windowWidth = window.innerWidth;
 
     const levels = [
+        // LEVEL 1
         {
             playerStart: {x: 0, y: windowHeight - groundHeight - playerHeight},
             door: {x: windowWidth - 200, y: 50},
@@ -96,6 +99,22 @@ const initGame = function () {
                 {x: 700, y: windowHeight - 370, width: 120, height: 20},
                 {x: 850, y: windowHeight - 450, width: 120, height: 20},
                 {x: 1000, y: windowHeight - 550, width: 120, height: 20},
+                {x: windowWidth - 250, y: 50 + 45, width: 250, height: 20}
+            ]
+        },
+        // LEVEL 2 - duplicate of level 1 for testing
+        {
+            playerStart: {x: 0, y: windowHeight - groundHeight - playerHeight},
+            door: {x: windowWidth - 200, y: 50},
+            platforms: [
+                {x: 0, y: windowHeight - groundHeight, width: windowWidth, height: groundHeight}, //ground
+                {x: 200, y: windowHeight - 150, width: 150, height: 20},
+                {x: 350, y: windowHeight - 250, width: 120, height: 20},
+                {x: 200, y: windowHeight - 350, width: 120, height: 20},
+                {x: 400, y: windowHeight - 450, width: 120, height: 20},
+                {x: 700, y: windowHeight - 370, width: 120, height: 20},
+                {x: 850, y: windowHeight - 450, width: 120, height: 20},
+                {x: 1000, y: windowHeight - 600, width: 120, height: 20},
                 {x: windowWidth - 250, y: 50 + 45, width: 250, height: 20}
             ]
         }
@@ -150,6 +169,35 @@ const initGame = function () {
         )
     }
 
+    const showVictoryScreen = function() {
+        victoryScreen.style.display = "flex"
+
+        const nextLevelButton = document.getElementById("next_level_button")
+        const mainMenuButton = document.getElementById("main_menu_button")
+
+        nextLevelButton.addEventListener("click", () => {
+            victoryScreen.style.display = "none"
+
+            const nextLevel = (levels.indexOf(currentLevel) + 1);
+            loadLevel(nextLevel)
+            
+            update()
+        })
+
+        mainMenuButton.addEventListener("click", () => {
+            // Hide game elements
+            player.style.display = "none";
+            door.style.display = "none";
+            victoryScreen.style.display = "none";
+
+            // Remove all platforms
+            document.querySelectorAll('.platform').forEach(p => p.remove());
+
+            // Show start menu
+            startMenu.style.display = "block";
+            showStartMenu = true;
+        })
+    }
     // Constantly updates game state 
     const update = function () {
         // Left and right movement
@@ -258,6 +306,10 @@ const initGame = function () {
         // Check if colliding and set door color accordingly
         if (overlaps(playerRect, doorRect)) {
             door.style.backgroundColor = "red"
+
+            showVictoryScreen()
+            
+            return
         } else {
             door.style.backgroundColor = "black"
         }
