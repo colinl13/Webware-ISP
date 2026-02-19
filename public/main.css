@@ -5,20 +5,17 @@
     position: absolute;
 }
 
-#floor {
-  position: absolute;
-  top: 430px;
-  width: 100%;
-  height: 4px;
-  background: black;
-}
-
 #door {
     position: absolute;
     top: 385px;
     left: 1000px;
     height: 45px;
     width: 35px;
+    background-color: black;
+}
+
+.platform {
+    position: absolute;
     background-color: black;
 }
 
@@ -70,4 +67,55 @@
 #settings {
     padding: 5px 10px;
     margin:5px;
+}
+
+/* Fullscreen semi-transparent overlay */
+#victory_screen {
+    display: none; /* hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent dark overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#victory_content {
+    background-color: white;
+    padding: 40px 60px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+#victory_content h1 {
+    margin-bottom: 20px;
+    font-size: 2em;
+    color: #333;
+}
+
+/* Buttons inside the modal */
+#victory_buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+#victory_buttons button {
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #3498db;
+    color: white;
+    transition: background-color 0.2s;
+}
+
+#victory_buttons button:hover {
+    background-color: #2980b9;
 }
