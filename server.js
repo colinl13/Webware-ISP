@@ -6,6 +6,7 @@ const express = require("express"),
       // to install the mime library if you"re testing this on your local machine.
       // However, Glitch will install it automatically by looking in your package.json
       // file.
+      mime = require("mime"),
       dir = "public/",
       port = process.env.PORT || 3000
 
@@ -38,6 +39,23 @@ async function initDB() {
 }
 
 initDB()
+
+// Helper function to send files (for non-static files)
+const sendFile = function(response, filename) {
+  const type = mime.getType(filename)
+
+  fs.readFile(filename, function(error, content) {
+    // if the error = null, then we've loaded the file successfully
+    if (error === null) {
+      // status code: https://httpstatuses.com
+      response.setHeader("Content-Type", type)
+      response.send(content)
+    } else {
+      // file not found, error code 404
+      response.status(404).send("404 Error: File Not Found")
+    }
+  })
+}
 
 // Middleware to parse JSON bodies
 app.use(express.json())
@@ -84,6 +102,10 @@ app.get("/api/auth-status", (request, response) => {
       email: request.oidc.user?.email
     }
   })
+})
+
+app.get("/levelone", (request, response) => {
+  sendFile(response, "public/levelone.html")
 })
 
 app.listen(port, () => {

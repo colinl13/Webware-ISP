@@ -1,67 +1,5 @@
-// FRONT-END (CLIENT) JAVASCRIPT HERE
-
-const startMenu = document.getElementById("start_menu")
-// variable to determine whether start menu is shown or not
-let showStartMenu = false
-
-// Moved these to global scope so they can be accessed in all functions
-const player = document.getElementById("player");
-const door = document.getElementById("door");
-const victoryScreen = document.getElementById("victory_screen")
-
-const initStartMenu = function() {
-    // Start menu is shown
-    showStartMenu = true
-
-    // Dont show off game elements yet
-    player.style.display = "none"
-    door.style.display = "none"
-    victoryScreen.style.display = "none"
-
-    // Get menu buttons
-    const startButton = document.getElementById("start_button")
-    const loginButton = document.getElementById("login_button")
-    const logoutButton = document.getElementById("logout_button")
-
-    // Start game through menu
-    startButton.addEventListener("click", () => {
-            initGame()
-            startMenu.style.display = "none"
-        }
-    )
-
-    // Determines whether to show login or logout button
-    fetch('/api/auth-status')
-    .then(r => r.json())
-    .then(({ authenticated }) => {
-      if (authenticated) {
-        if (logoutButton) 
-          logoutButton.style.display = 'inline-block'
-        if (loginButton) 
-          loginButton.style.display = 'none'
-      } else {
-        if (loginButton) 
-          loginButton.style.display = 'inline-block'
-        if (logoutButton) 
-          logoutButton.style.display = 'none'
-      }
-    })
-
-    if (loginButton) {
-        loginButton.onclick = () => {
-        window.location.href = '/login'
-        }
-    }
-    if (logoutButton) {
-        logoutButton.onclick = () => {
-        window.location.href = '/logout'
-        }
-    }
-}
-
 const initGame = function () {
-    showStartMenu = false
-    startMenu.style.display = "none";
+    victory_screen.style.display = "none"
     player.style.display = "block";
     door.style.display = "block";
 
@@ -101,29 +39,13 @@ const initGame = function () {
                 {x: 1000, y: windowHeight - 550, width: 120, height: 20},
                 {x: windowWidth - 250, y: 50 + 45, width: 250, height: 20}
             ]
-        },
-        // LEVEL 2 - duplicate of level 1 for testing
-        {
-            playerStart: {x: 0, y: windowHeight - groundHeight - playerHeight},
-            door: {x: windowWidth - 200, y: 50},
-            platforms: [
-                {x: 0, y: windowHeight - groundHeight, width: windowWidth, height: groundHeight}, //ground
-                {x: 200, y: windowHeight - 150, width: 150, height: 20},
-                {x: 350, y: windowHeight - 250, width: 120, height: 20},
-                {x: 200, y: windowHeight - 350, width: 120, height: 20},
-                {x: 400, y: windowHeight - 450, width: 120, height: 20},
-                {x: 700, y: windowHeight - 370, width: 120, height: 20},
-                {x: 850, y: windowHeight - 450, width: 120, height: 20},
-                {x: 1000, y: windowHeight - 600, width: 120, height: 20},
-                {x: windowWidth - 250, y: 50 + 45, width: 250, height: 20}
-            ]
         }
     ]
 
     let currentLevel = null
 
     function loadLevel(level) {
-        currentLevel = levels[level];
+        currentLevel = levels[0]; // Keep levels as a list to keep same js logic
 
         document.querySelectorAll('.platform').forEach(p => p.remove()) // Clear existing platforms
 
@@ -170,7 +92,7 @@ const initGame = function () {
     }
 
     const showVictoryScreen = function() {
-        victoryScreen.style.display = "flex"
+        victory_screen.style.display = "flex"
 
         const nextLevelButton = document.getElementById("next_level_button")
         const mainMenuButton = document.getElementById("main_menu_button")
@@ -193,9 +115,6 @@ const initGame = function () {
             // Remove all platforms
             document.querySelectorAll('.platform').forEach(p => p.remove());
 
-            // Show start menu
-            startMenu.style.display = "block";
-            showStartMenu = true;
         })
     }
     // Constantly updates game state 
@@ -322,6 +241,6 @@ const initGame = function () {
 }
 
 window.onload = function () {
-    // Show start menu on load
-    initStartMenu()
+    // Show game on load
+    initGame()
 }
