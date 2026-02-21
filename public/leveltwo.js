@@ -233,6 +233,14 @@ const initGame = function () {
 }
 
 window.onload = function () {
-    // Show game on load
-    initGame()
+    // Show game on load if logged in
+    fetch('/api/auth-status').then(r => r.json()).then(({ authenticated }) => 
+        {
+        if (!authenticated) {
+            window.location.href = "/";
+            alert("You must be logged in to play this level");
+        } else {
+            initGame()
+        }
+    })
 }
