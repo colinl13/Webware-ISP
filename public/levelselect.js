@@ -15,8 +15,23 @@ level_two.addEventListener("click", () =>{
 
 main_menu.addEventListener("click", () => {
     window.location.href = "/";
-    }
-)
+})
+
+fetch('/api/auth-status')
+    .then(r => r.json())
+    .then(({ authenticated }) => {
+      if (authenticated) {
+        if (login_button) 
+          login_button.style.display = 'none'
+      } else {
+        if (login_button) 
+          login_button.style.display = 'inline-block'
+        }
+    })
+    
+login_button.addEventListener("click", () => {
+    window.location.href = "/login";
+})
 
 // Uncomment when level is ready
 // level_three.addEventListener("click", () =>{

@@ -96,18 +96,18 @@ const initGame = function () {
 
         const nextLevelButton = document.getElementById("next_level_button")
         const mainMenuButton = document.getElementById("main_menu_button")
+        const levelSelectButton = document.getElementById("level_select_button")
 
         nextLevelButton.addEventListener("click", () => {
-            victoryScreen.style.display = "none"
-
-            const nextLevel = (levels.indexOf(currentLevel) + 1);
-            loadLevel(nextLevel)
-            
-            update()
+            window.location.href = "/leveltwo"
         })
 
         mainMenuButton.addEventListener("click", () => {
             window.location.href = "/";
+        })
+
+        levelSelectButton.addEventListener("click", () =>{
+            window.location.href = "/levelselect"
         })
     }
     // Constantly updates game state 
