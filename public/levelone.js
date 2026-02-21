@@ -107,14 +107,7 @@ const initGame = function () {
         })
 
         mainMenuButton.addEventListener("click", () => {
-            // Hide game elements
-            player.style.display = "none";
-            door.style.display = "none";
-            victoryScreen.style.display = "none";
-
-            // Remove all platforms
-            document.querySelectorAll('.platform').forEach(p => p.remove());
-
+            window.location.href = "/";
         })
     }
     // Constantly updates game state 

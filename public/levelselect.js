@@ -13,6 +13,12 @@ level_two.addEventListener("click", () =>{
     window.location.href = "/leveltwo";
 })
 
+main_menu.addEventListener("click", () => {
+    window.location.href = "/";
+    }
+)
+
+// Uncomment when level is ready
 // level_three.addEventListener("click", () =>{
 //     window.location.href = "/levelthree";
 // })

@@ -24,7 +24,7 @@ const initGame = function () {
     const windowHeight = window.innerHeight;
     const windowWidth = window.innerWidth;
 
-    const level = [
+    const levels = [
         // LEVEL 2 - duplicate of level 1 for testing
         {
             playerStart: {x: 0, y: windowHeight - groundHeight - playerHeight},
@@ -108,17 +108,7 @@ const initGame = function () {
         })
 
         mainMenuButton.addEventListener("click", () => {
-            // Hide game elements
-            player.style.display = "none";
-            door.style.display = "none";
-            victoryScreen.style.display = "none";
-
-            // Remove all platforms
-            document.querySelectorAll('.platform').forEach(p => p.remove());
-
-            // Show start menu
-            startMenu.style.display = "block";
-            showStartMenu = true;
+            window.location.href = "/";
         })
     }
     // Constantly updates game state 
@@ -242,4 +232,9 @@ const initGame = function () {
     
     loadLevel(0)
     update()
+}
+
+window.onload = function () {
+    // Show game on load
+    initGame()
 }
