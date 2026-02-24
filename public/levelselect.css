@@ -1,0 +1,28 @@
+#level_menu { 
+    position: static;
+    background-color: blanchedalmond;
+    width: 500px;
+    height: 500px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px; /* Adjust the gap between the level buttons and menu buttons as needed */
+}
+
+#level_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Adjust the gap between buttons as needed */
+}
+
+#menu_buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Adjust the gap between buttons as needed */
+}
