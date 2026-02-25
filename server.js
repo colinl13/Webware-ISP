@@ -108,15 +108,9 @@ app.get("/levelselect", (request, response) => {
   sendFile(response, "public/levelselect.html")
 })
 
-app.get("/levelone", (request, response) => {
-  sendFile(response, "public/levelone.html")
+app.get("/game", (request, response) => {
+  sendFile(response, "public/game.html")
 })
-
-app.get("/leveltwo", (request, response) => {
-  sendFile(response, "public/leveltwo.html")
-})
-
-
 
 app.listen(port, () => {
       console.log(`Server running on port ${port}`)
