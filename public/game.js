@@ -36,11 +36,15 @@ const levels = [
       { x: 350, y: windowHeight - 250, width: 120, height: 20 },
       { x: 200, y: windowHeight - 350, width: 120, height: 20 },
       { x: 400, y: windowHeight - 450, width: 120, height: 20 },
-      { x: 700, y: windowHeight - 370, width: 120, height: 20 },
+      { x: 700, y: windowHeight - 370, width: 120, height: 20 }, 
       { x: 850, y: windowHeight - 450, width: 120, height: 20 },
       { x: 1000, y: windowHeight - 600, width: 120, height: 20 },
       { x: windowWidth - 250, y: 50 + 45, width: 250, height: 20 }
-    ]
+    ],
+    
+    lever: { x: 250, y: windowHeight - groundHeight - 70, width: 30, height: 50 },
+    // Change this variable to change which platform gets disappeared
+    leverPlatformIndex: 4
   }
 ];
 
@@ -75,13 +79,19 @@ const initGame = function (initialLevelIndex) {
     levels.length - 1
   );
   let currentLevel = null;
+  let leverPulled = false;
+  let leverElement = null;
+  let eKeyWasDown = false;
 
   // Load the requested level index into the game
   function loadLevel(index) {
     currentLevelIndex = index;
     currentLevel = levels[currentLevelIndex];
+    leverPulled = false;
 
     document.querySelectorAll(".platform").forEach((p) => p.remove());
+    const oldLever = document.getElementById("lever");
+    if (oldLever) oldLever.remove();
 
     x = currentLevel.playerStart.x;
     y = currentLevel.playerStart.y;
@@ -91,16 +101,41 @@ const initGame = function (initialLevelIndex) {
     door.style.left = `${currentLevel.door.x}px`;
     door.style.top = `${currentLevel.door.y}px`;
 
-    currentLevel.platforms.forEach((p) => {
+    currentLevel.platforms.forEach((p, i) => {
       const platformDiv = document.createElement("div");
       platformDiv.classList.add("platform");
+      platformDiv.dataset.platformIndex = String(i);
       platformDiv.style.position = "absolute";
       platformDiv.style.left = `${p.x}px`;
       platformDiv.style.top = `${p.y}px`;
       platformDiv.style.width = `${p.width}px`;
       platformDiv.style.height = `${p.height}px`;
+      if (currentLevel.lever && i === currentLevel.leverPlatformIndex) {
+        platformDiv.style.display = "none";
+      }
       document.body.appendChild(platformDiv);
     });
+
+    if (currentLevel.lever) {
+      leverElement = document.createElement("div");
+      leverElement.id = "lever";
+      leverElement.classList.add("lever");
+      leverElement.style.left = `${currentLevel.lever.x}px`;
+      leverElement.style.top = `${currentLevel.lever.y}px`;
+      leverElement.style.width = `${currentLevel.lever.width}px`;
+      leverElement.style.height = `${currentLevel.lever.height}px`;
+      document.body.appendChild(leverElement);
+    } else {
+      leverElement = null;
+    }
+  }
+
+  function getActivePlatforms() {
+    if (!currentLevel.lever || !currentLevel.hasOwnProperty("leverPlatformIndex")) {
+      return currentLevel.platforms;
+    }
+    if (!leverPulled) return currentLevel.platforms.filter((_, i) => i !== currentLevel.leverPlatformIndex);
+    return currentLevel.platforms;
   }
 
   // Listen for key inputs
@@ -152,6 +187,32 @@ const initGame = function (initialLevelIndex) {
 
   // Constantly updates game state
   const update = function () {
+    const activePlatforms = getActivePlatforms();
+
+    if (currentLevel.lever && leverElement) {
+      const leverRect = {
+        x: currentLevel.lever.x,
+        y: currentLevel.lever.y,
+        width: currentLevel.lever.width,
+        height: currentLevel.lever.height
+      };
+      const playerRect = { x, y, width: player.offsetWidth, height: player.offsetHeight };
+      const atLever = overlaps(playerRect, leverRect);
+      if (atLever && keys["e"]) {
+        if (!eKeyWasDown) {
+          // toggles lever on and off
+          leverPulled = !leverPulled;
+          const platformDiv = document.querySelector(
+            `.platform[data-platform-index="${currentLevel.leverPlatformIndex}"]`
+          );
+          if (platformDiv) platformDiv.style.display = leverPulled ? "block" : "none";
+        }
+        eKeyWasDown = true;
+      } else {
+        eKeyWasDown = false;
+      }
+    }
+
     if (keys["ArrowLeft"]) {
       velX = -speed;
     } else if (keys["ArrowRight"]) {
@@ -169,7 +230,7 @@ const initGame = function (initialLevelIndex) {
 
     x += velX;
 
-    currentLevel.platforms.forEach((p) => {
+    activePlatforms.forEach((p) => {
       const playerRight = x + player.offsetWidth;
       const playerLeft = x;
       const platformRight = p.x + p.width;
@@ -195,7 +256,7 @@ const initGame = function (initialLevelIndex) {
     y += velY;
     onGround = false;
 
-    currentLevel.platforms.forEach((p) => {
+    activePlatforms.forEach((p) => {
       const playerBottom = y + player.offsetHeight;
       const playerTop = y;
       const platformTop = p.y;
