@@ -27,6 +27,12 @@
     cursor: pointer;
 }
 
+.spike {
+    position: absolute;
+    background-color: red;
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
 #start_menu { /* this is also the container for the start menu buttons */
     position: static;
     background-color: blanchedalmond;

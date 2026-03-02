@@ -43,8 +43,18 @@ const levels = [
     ],
     
     lever: { x: 250, y: windowHeight - groundHeight - 70, width: 30, height: 50 },
-    // Change this variable to change which platform gets disappeared
-    leverPlatformIndex: 4
+    leverPlatformIndex: 4,
+    spikes: (() => {
+      const arr = [];
+      const startX = Math.floor(windowWidth / 2);
+      const spikeW = 30;
+      const spikeH = 35;
+      const spikeY = windowHeight - groundHeight - spikeH;
+      for (let sx = startX; sx < windowWidth - spikeW; sx += 50) {
+        arr.push({ x: sx, y: spikeY, width: spikeW, height: spikeH });
+      }
+      return arr;
+    })()
   }
 ];
 
@@ -90,6 +100,7 @@ const initGame = function (initialLevelIndex) {
     leverPulled = false;
 
     document.querySelectorAll(".platform").forEach((p) => p.remove());
+    document.querySelectorAll(".spike").forEach((s) => s.remove());
     const oldLever = document.getElementById("lever");
     if (oldLever) oldLever.remove();
 
@@ -115,6 +126,18 @@ const initGame = function (initialLevelIndex) {
       }
       document.body.appendChild(platformDiv);
     });
+
+    if (currentLevel.spikes) {
+      currentLevel.spikes.forEach((s) => {
+        const spikeDiv = document.createElement("div");
+        spikeDiv.classList.add("spike");
+        spikeDiv.style.left = `${s.x}px`;
+        spikeDiv.style.top = `${s.y}px`;
+        spikeDiv.style.width = `${s.width}px`;
+        spikeDiv.style.height = `${s.height}px`;
+        document.body.appendChild(spikeDiv);
+      });
+    }
 
     if (currentLevel.lever) {
       leverElement = document.createElement("div");
@@ -317,6 +340,15 @@ const initGame = function (initialLevelIndex) {
       return;
     } else {
       door.style.backgroundColor = "black";
+    }
+
+    if (currentLevel.spikes) {
+      for (const spike of currentLevel.spikes) {
+        if (overlaps(playerRect, spike)) {
+          loadLevel(currentLevelIndex);
+          // return;
+        }
+      }
     }
 
     requestAnimationFrame(update);
