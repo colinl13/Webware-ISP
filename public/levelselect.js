@@ -6,11 +6,11 @@ const login_button = document.getElementById("login_button");
 const main_menu = document.getElementById("main_menu");
 
 level_one.addEventListener("click", () =>{
-    window.location.href = "/levelone";
+    window.location.href = "/game?level=0";
 })
 
 level_two.addEventListener("click", () =>{
-    window.location.href = "/leveltwo";
+    window.location.href = "/game?level=1";
 })
 
 main_menu.addEventListener("click", () => {

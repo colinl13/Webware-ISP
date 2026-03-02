@@ -25,10 +25,8 @@ const initStartMenu = function() {
 
     // Start game through menu
     startButton.addEventListener("click", () => {
-            window.location.href = '/levelselect';
-            // startMenu.style.display = "none"
-        }
-    )
+        window.location.href = '/levelselect';
+    })
 
     // Determines whether to show login or logout button
     fetch('/api/auth-status')
