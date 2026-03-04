@@ -28,7 +28,29 @@ fetch('/api/auth-status')
           login_button.style.display = 'inline-block'
         }
     })
-    
+
+// If logged in, mark any completed levels with a green ring
+fetch("/api/completed-levels")
+  .then((r) => r.json())
+  .then(({ authenticated, completedLevels }) => {
+    if (!authenticated || !Array.isArray(completedLevels)) return;
+
+    const levelButtonsByIndex = {
+      0: level_one,
+      1: level_two,
+      2: level_three
+    };
+
+    completedLevels.forEach((idx) => {
+      const btn = levelButtonsByIndex[idx];
+      if (btn) {
+        btn.classList.add("completed-level");
+      }
+    });
+  })
+  .catch(() => {
+  });
+
 login_button.addEventListener("click", () => {
     window.location.href = "/login";
 })

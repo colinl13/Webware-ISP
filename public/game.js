@@ -127,6 +127,22 @@ const initGame = function (initialLevelIndex) {
   const showVictoryScreen = function () {
     victoryScreen.style.display = "flex";
 
+    // Record level completion for logged-in users
+    fetch("/api/auth-status")
+      .then((r) => r.json())
+      .then(({ authenticated }) => {
+        if (!authenticated) return;
+
+        fetch("/api/level-complete", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ levelIndex: currentLevelIndex })
+        }).catch(() => {
+        });
+      })
+      .catch(() => {
+      });
+
     const nextLevelButton = document.getElementById("next_level_button");
     const mainMenuButton = document.getElementById("main_menu_button");
     const levelSelectButton = document.getElementById("level_select_button");

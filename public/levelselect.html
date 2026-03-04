@@ -1,28 +1,41 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-    <title>Earthboy and Airgirl</title>
+    <title>Earthboy: Journey Through the Cave - Level Select</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="levelselect.css">
+    <link rel="stylesheet" href="main.css"> <link rel="stylesheet" href="levelselect.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Metamorphous&display=swap" rel="stylesheet">
 </head>
-
 <body>
+
+    <h1 id="game_title" class="gold-text">Level Selection</h1>
 
     <div id="level_menu">
         <div id="level_container">
-            <button id="to_level_one">Level 1</button> <!-- not yet implemented -->
-            <button id="to_level_two">Level 2</button> <!-- not yet implemented -->
-            <button id="to_level_three">Level 3</button> <!-- not yet implemented -->
+            <button id="to_level_one">
+                <span class="gold-text" style="font-size: 2rem;">1</span>
+            </button>
+            <button id="to_level_two">
+                <span class="gold-text" style="font-size: 2rem;">2</span>
+            </button>
+            <button id="to_level_three">
+                <span class="gold-text" style="font-size: 2rem;">3</span>
+            </button>
         </div>
-        <div id = "menu_buttons">
-            <button id="login_button">Login to save progress!</button> 
-            <button id="main_menu">Back to Menu</button> 
+
+        <div id="menu_buttons">
+            <button id="login_button">
+                <span class="gold-text">Login to save progress!</span>
+            </button> 
+            <button id="main_menu">
+                <span class="gold-text">Back to Menu</span>
+            </button> 
         </div>
     </div>
 
+    <script src="levelselect.js"></script>
 </body>
-
-<script src="levelselect.js"></script>
 </html>
-
