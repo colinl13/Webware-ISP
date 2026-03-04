@@ -32,10 +32,10 @@ const levels = [
     door: { x: windowWidth - 200, y: 50 },
     platforms: [
       { x: 0, y: windowHeight - groundHeight, width: windowWidth, height: groundHeight },
-      { x: 200, y: windowHeight - 150, width: 150, height: 20 },
+      { x: 500, y: windowHeight - 150, width: 150, height: 20 },
       { x: 350, y: windowHeight - 250, width: 120, height: 20 },
       { x: 200, y: windowHeight - 350, width: 120, height: 20 },
-      { x: 400, y: windowHeight - 450, width: 120, height: 20 }, // lever makes this platform appear
+      { x: 500, y: windowHeight - 300, width: 120, height: 20 }, // lever makes this platform appear
       { x: 700, y: windowHeight - 370, width: 120, height: 20 }, 
       { x: 850, y: windowHeight - 450, width: 120, height: 20 },
       { x: 1000, y: windowHeight - 550, width: 120, height: 20 },
@@ -65,7 +65,7 @@ const levels = [
       { x: 450, y: windowHeight - 250, width: 200, height: 20 },
       { x: 180, y: windowHeight - 350, width: 220, height: 20 },
       // { x: 400, y: windowHeight - 450, width: 120, height: 20 },        
-      { x: Math.floor(windowWidth / 2) + 110, y: windowHeight - groundHeight - 80, width: 100, height: 20 }, // lever makes this platform appear
+      { x: Math.floor(windowWidth / 2) + 25, y: windowHeight - groundHeight - 80, width: 150, height: 20 }, // lever makes this platform appear
       { x: 200, y: windowHeight - 600, width: 120, height: 20 }, // lever2 makes this platform disappear
       { x: 700, y: windowHeight - 370, width: 120, height: 20 }, 
       { x: 850, y: windowHeight - 450, width: 120, height: 20 },
@@ -83,7 +83,7 @@ const levels = [
       const spikeW = 30;
       const spikeH = 35;
       const spikeY = windowHeight - groundHeight - spikeH;
-      for (let sx = startX; sx < windowWidth - spikeW - 600; sx += 50) {
+      for (let sx = startX; sx < windowWidth - spikeW - 550; sx += 50) {
         arr.push({ x: sx, y: spikeY, width: spikeW, height: spikeH });
       }
       return arr;
