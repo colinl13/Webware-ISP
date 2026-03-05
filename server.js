@@ -2,10 +2,6 @@ require("dotenv").config()
 
 const express = require("express"),
       fs = require("fs"),
-      // IMPORTANT: you must run `npm install` in the directory for this assignment
-      // to install the mime library if you"re testing this on your local machine.
-      // However, Glitch will install it automatically by looking in your package.json
-      // file.
       mime = require("mime"),
       dir = "public/",
       port = process.env.PORT || 3000
@@ -74,11 +70,6 @@ const config = {
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
-
-// req.isAuthenticated is provided from the auth router
-// app.get('/', (req, res) => {
-//   res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
-// });
 
 // Route to serve the main HTML page; always render and let client show login/logout
 app.get("/", (request, response) => {
