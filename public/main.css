@@ -19,6 +19,27 @@
     background-color: black;
 }
 
+.lever {
+    position: absolute;
+    background-color: #8b4513;
+    border: 3px solid #5d2e0c;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.spike {
+    position: absolute;
+    background-color: red;
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.pushable_box {
+    position: absolute;
+    background-color: #8b6914;
+    /* border: 2px solid #5d4a0c; */
+    border-radius: 4px;
+}
+
 #start_menu { /* this is also the container for the start menu buttons */
     position: static;
     background-color: blanchedalmond;

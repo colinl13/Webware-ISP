@@ -13,6 +13,10 @@ level_two.addEventListener("click", () =>{
     window.location.href = "/game?level=1";
 })
 
+level_three.addEventListener("click", () =>{
+    window.location.href = "/game?level=2";
+})
+
 main_menu.addEventListener("click", () => {
     window.location.href = "/";
 })
@@ -32,10 +36,3 @@ fetch('/api/auth-status')
 login_button.addEventListener("click", () => {
     window.location.href = "/login";
 })
-
-// Uncomment when level is ready
-// level_three.addEventListener("click", () =>{
-//     window.location.href = "/levelthree";
-// })
-
-
