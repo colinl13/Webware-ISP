@@ -637,8 +637,8 @@ window.onload = function () {
     .then((r) => r.json())
     .then(({ authenticated }) => {
       if (!authenticated) {
-        window.location.href = "/";
         alert("You must be logged in to play this level");
+        window.location.href = "/";
       } else {
         initGame(levelIndex);
       }

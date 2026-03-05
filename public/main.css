@@ -67,7 +67,6 @@ body::before {
     background-size: cover;
     background-position: center;
     border: 2px solid black;
-    /* background-color: rgb(160, 160, 160); */
 }
 
 .lever {
@@ -123,6 +122,11 @@ body::before {
     inset: 0;
     background-color: rgba(0, 0, 0, 0.5);
     pointer-events: none;
+}
+
+#game_title {
+    /* padding:10px; */
+    margin: 10px;
 }
 
 #game_title.gold-text {
