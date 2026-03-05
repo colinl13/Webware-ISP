@@ -76,9 +76,9 @@ const config = {
 app.use(auth(config));
 
 // req.isAuthenticated is provided from the auth router
-app.get('/', (req, res) => {
-  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
-});
+// app.get('/', (req, res) => {
+//   res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+// });
 
 // Route to serve the main HTML page; always render and let client show login/logout
 app.get("/", (request, response) => {
@@ -102,6 +102,60 @@ app.get("/api/auth-status", (request, response) => {
       email: request.oidc.user?.email
     }
   })
+})
+
+// Return which levels the current user has completed
+app.get("/api/completed-levels", async (request, response) => {
+  const isAuthenticated = !!(request.oidc && request.oidc.isAuthenticated())
+
+  if (!isAuthenticated) {
+    return response.json({ authenticated: false, completedLevels: [] })
+  }
+
+  try {
+    const userId = request.oidc.user?.sub
+    if (!userId) {
+      return response
+        .status(400)
+        .json({ authenticated: false, completedLevels: [] })
+    }
+
+    const doc = await infoCollection.findOne({ userId })
+    const completedLevels = Array.isArray(doc?.completedLevels)
+      ? doc.completedLevels
+      : []
+
+    response.json({ authenticated: true, completedLevels })
+  } catch (err) {
+    console.error("Error fetching level progress", err)
+    response
+      .status(500)
+      .json({ authenticated: true, completedLevels: [], error: "db_error" })
+  }
+})
+
+// Track which levels a user has completed
+app.post("/api/level-complete", requiresAuth(), async (request, response) => {
+  try {
+    const { levelIndex } = request.body
+
+    const userId = request.oidc.user?.sub
+
+    if (!userId) {
+      return response.status(400).json({ error: "Missing user id" })
+    }
+
+    await infoCollection.updateOne(
+      { userId },
+      { $addToSet: { completedLevels: levelIndex } },
+      { upsert: true }
+    )
+
+    response.json({ ok: true })
+  } catch (err) {
+    console.error("Error updating level progress", err)
+    response.status(500).json({ error: "Internal server error" })
+  }
 })
 
 app.get("/levelselect", (request, response) => {

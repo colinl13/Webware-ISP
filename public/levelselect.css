@@ -1,14 +1,53 @@
-#level_menu { 
-    position: static;
-    background-color: blanchedalmond;
-    width: 500px;
-    height: 500px;
-    margin: auto;
+/* levelselect.css */
+
+body {
+    margin: 0;
+    padding: 0;
+    /* Use the same background as your start menu, but for the whole page */
+    background-image: url("images/start_menu_background.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 50px; /* Adjust the gap between the level buttons and menu buttons as needed */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Dark Overlay for the whole screen to make buttons pop */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 0;
+}
+
+#game_title.gold-text {
+    position: relative;
+    z-index: 2;
+    font-size: 4rem;
+    
+    /* Centering logic */
+    text-align: center;
+    margin: 0 auto 50px auto;
+    
+    -webkit-text-stroke: 1.5px black;
+    white-space: nowrap;
+    width: 100%;
+}
+
+#level_menu { 
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
 }
 
 #level_container {
@@ -16,13 +55,68 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 10px; /* Adjust the gap between buttons as needed */
+    gap: 30px;
 }
 
+/* Circular Buttons */
+#level_container button {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: rgb(23, 24, 27);
+    
+    border: none; 
+    border: 5px solid #d4af37; 
+
+    box-shadow: 
+        inset 0 0 10px rgba(255, 215, 0, 0.2), 
+        0 0 15px rgba(0, 0, 0, 0.5);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    
+    overflow: hidden; 
+}
+
+#level_container button:hover {
+    transform: scale(1.15);
+    border-color: #f1d56e; /* Brighter gold on hover */
+    box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+}
+
+#level_container button.completed-level {
+    border-color: #3cb371;
+}
+
+#level-container button.completed-level:hover {
+    border-color: #3cb371 !important;
+
+    box-shadow:
+        inset 0 0 10px rgba(60, 179, 113, 0.3),
+        0 0 20px rgba(60, 179, 113, 0.8);
+}
+
+/* Rectangular buttons */
 #menu_buttons {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 10px; /* Adjust the gap between buttons as needed */
+    gap: 20px;
+}
+
+#menu_buttons button {
+    padding: 15px 30px;
+    font-family: "Metamorphous", serif;
+    background-color: rgb(23, 24, 27);
+    cursor: pointer;
+    border: 4px solid;
+    border-image-source: url("images/gold.jpg");
+    border-image-slice: 30;
+    transition: transform 0.2s ease;
+}
+
+#menu_buttons button:hover {
+    transform: translateY(-5px);
 }

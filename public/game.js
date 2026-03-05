@@ -13,7 +13,7 @@ const levels = [
   // LEVEL ONE
   {
     playerStart: { x: 0, y: windowHeight - groundHeight - playerHeight },
-    door: { x: windowWidth - 200, y: 50 },
+    door: { x: windowWidth - 200, y: 80 },
     platforms: [
       { x: 0, y: windowHeight - groundHeight, width: windowWidth, height: groundHeight },
       { x: 150, y: windowHeight - 150, width: 150, height: 20 },
@@ -23,9 +23,10 @@ const levels = [
       { x: 700, y: windowHeight - 370, width: 120, height: 20 },
       { x: 850, y: windowHeight - 450, width: 120, height: 20 },
       { x: 1000, y: windowHeight - 550, width: 120, height: 20 },
-      { x: windowWidth - 250, y: 50 + 45, width: 250, height: 20 }
+      { x: windowWidth - 250, y: 80 + 45, width: 250, height: 20 }
     ]
   },
+  
   // LEVEL TWO
   {
     playerStart: { x: 0, y: windowHeight - groundHeight - playerHeight },
@@ -270,6 +271,22 @@ const initGame = function (initialLevelIndex) {
   // Show the victory screen
   const showVictoryScreen = function () {
     victoryScreen.style.display = "flex";
+
+    // Record level completion for logged-in users
+    fetch("/api/auth-status")
+      .then((r) => r.json())
+      .then(({ authenticated }) => {
+        if (!authenticated) return;
+
+        fetch("/api/level-complete", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ levelIndex: currentLevelIndex })
+        }).catch(() => {
+        });
+      })
+      .catch(() => {
+      });
 
     const nextLevelButton = document.getElementById("next_level_button");
     const mainMenuButton = document.getElementById("main_menu_button");
