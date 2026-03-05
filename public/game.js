@@ -101,6 +101,7 @@ const parseLevelFromQuery = () => {
 };
 
 const initGame = function (initialLevelIndex) {
+
   victoryScreen.style.display = "none";
   player.style.display = "block";
   door.style.display = "block";
@@ -333,6 +334,9 @@ const initGame = function (initialLevelIndex) {
             `.platform[data-platform-index="${currentLevel.leverPlatformIndex}"]`
           );
           if (platformDiv) platformDiv.style.display = leverPulled ? "block" : "none";
+          if (leverElement) {
+            leverElement.style.backgroundImage = leverPulled ? 'url(images/lever_up.png)' : 'url(images/lever_down.png)';
+          }
         }
         eKeyWasDownLever1 = true;
       } else {
@@ -357,6 +361,9 @@ const initGame = function (initialLevelIndex) {
             `.platform[data-platform-index="${currentLevel.lever2PlatformIndex}"]`
           );
           if (platformDiv2) platformDiv2.style.display = lever2Pulled ? "none" : "block";
+          if (lever2Element) {
+            lever2Element.style.backgroundImage = lever2Pulled ? 'url(images/lever_up.png' : 'url(images/lever_down.png)';
+          }
         }
         eKeyWasDownLever2 = true;
       } else {
@@ -553,13 +560,16 @@ const initGame = function (initialLevelIndex) {
       height: door.offsetHeight
     };
 
-    // Check if colliding and set door color accordingly
-    if (overlaps(playerRect, doorRect)) {
-      door.style.backgroundColor = "red";
-      showVictoryScreen();
-      return;
+    // Check if player is at the door, swap texture, and require ArrowUp to win
+    const atDoor = overlaps(playerRect, doorRect);
+    if (atDoor) {
+      door.style.backgroundImage = 'url("images/door_open.png")';
+      if (keys["ArrowUp"]) {
+        showVictoryScreen();
+        return;
+      }
     } else {
-      door.style.backgroundColor = "black";
+      door.style.backgroundImage = 'url("images/door.png")';
     }
 
     if (currentLevel.spikes) {
