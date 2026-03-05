@@ -2,6 +2,7 @@
 const player = document.getElementById("player");
 const door = document.getElementById("door");
 const victoryScreen = document.getElementById("victory_screen");
+const pauseScreen = document.getElementById("pause_screen");
 
 // Level information
 const playerHeight = 30;
@@ -103,8 +104,15 @@ const parseLevelFromQuery = () => {
 const initGame = function (initialLevelIndex) {
 
   victoryScreen.style.display = "none";
+  pauseScreen.style.display = "none";
   player.style.display = "block";
   door.style.display = "block";
+
+  const pauseButton = document.getElementById("pause_button");
+  pauseButton.onclick = () => {
+    showPauseScreen();
+    return;
+  };
 
   // Constants for moving
   const gravity = 0.6;
@@ -289,6 +297,7 @@ const initGame = function (initialLevelIndex) {
       .catch(() => {
       });
 
+    const restartLevelButton = document.getElementById("restart_button");
     const nextLevelButton = document.getElementById("next_level_button");
     const mainMenuButton = document.getElementById("main_menu_button");
     const levelSelectButton = document.getElementById("level_select_button");
@@ -302,12 +311,39 @@ const initGame = function (initialLevelIndex) {
       }
     };
 
+    restartLevelButton.onclick = () => {
+      window.location.href = `/game?level=${currentLevelIndex}`;
+    }
+
     mainMenuButton.onclick = () => {
       window.location.href = "/";
     };
 
     if (levelSelectButton) {
       levelSelectButton.onclick = () => {
+        window.location.href = "/levelselect";
+      };
+    }
+  };
+
+  // Show the pause menu
+  const showPauseScreen = function () {
+    pauseScreen.style.display = "flex";
+
+    const restartLevelButton2 = document.getElementById("restart_button2");
+    const mainMenuButton2 = document.getElementById("main_menu_button2");
+    const levelSelectButton2 = document.getElementById("level_select_button2");
+
+    restartLevelButton2.onclick = () => {
+        window.location.href = `/game?level=${currentLevelIndex}`;
+    };
+
+    mainMenuButton2.onclick = () => {
+      window.location.href = "/";
+    };
+
+    if (levelSelectButton2) {
+      levelSelectButton2.onclick = () => {
         window.location.href = "/levelselect";
       };
     }
