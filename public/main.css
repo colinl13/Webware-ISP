@@ -165,7 +165,7 @@ body::before {
 }
 
 /* --- Victory Screen Modal --- */
-#victory_screen {
+#victory_screen, #pause_screen {
     display: none;
     position: fixed;
     top: 0;
@@ -178,7 +178,7 @@ body::before {
     z-index: 1000;
 }
 
-#victory_content {
+#victory_content, #pause_content {
     background-color: rgb(23, 24, 27); /* Matches button background */
     padding: 40px 60px;
     border-radius: 0; /* Changed from 15px to look more like the menu */
@@ -192,7 +192,7 @@ body::before {
     border-image-repeat: round;
 }
 
-#victory_content h1.gold-text {
+#victory_content h1.gold-text, #pause_content h1.gold-text {
     font-size: 2.5rem;
     margin-top: 0;
     margin-bottom: 20px;
@@ -200,14 +200,14 @@ body::before {
     display: block; /* Ensures the background-clip works on the header */
 }
 
-#victory_buttons {
+#victory_buttons, #pause_buttons{
     display: flex;
     gap: 20px;
     justify-content: center;
     margin-top: 20px;
 }
 
-#victory_buttons button {
+#victory_buttons button, #pause_buttons button {
     font-family: "Metamorphous", serif;
     font-size: 1.1rem;
     cursor: pointer;
@@ -224,7 +224,7 @@ body::before {
     transition: transform 0.1s ease, background-color 0.2s ease;
 }
 
-#victory_buttons button:hover {
+#victory_buttons button:hover, #pause_buttons button:hover {
     background-color: #2a2a2a;
     transform: scale(1.03);
 }
