@@ -3,8 +3,8 @@
 body {
     margin: 0;
     padding: 0;
-    /* Use the same background as your start menu, but for the whole page */
-    background-image: url("images/start_menu_background.jpg");
+
+    background-image: url("images/start_menu_background.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -17,7 +17,6 @@ body {
     overflow: hidden;
 }
 
-/* Dark Overlay for the whole screen to make buttons pop */
 body::before {
     content: "";
     position: fixed;
