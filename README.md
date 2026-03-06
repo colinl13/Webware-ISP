@@ -15,11 +15,11 @@ The controls are as follows: use the left and right arrow keys to move left and 
 
 Our three biggest challenges while making this application were:
 
-1 - Collision detection
+1 - Collision detection<br>
 Collision detection between the player and the door/box/ground was a very difficult process. While testing, we often dealt with textures overlapping, falling through floors, and buttons not working correctly because the application did not properly detect when a player was 'touching' another element on the page. We were able to resolve these problems by the end of the project, with our main detection of collision being to find the x and y coordinates of an object and to compare that to the coordinates of another object.
 
-2 - Lever Functionality
+2 - Lever Functionality<br>
 The functionality of a single lever in level two was not too difficult all things considered, but we ran into several issues with making the second lever work on level three. There was issues with the positioning of the levers on level three, as one lever would activate from the incorrect location and/or activate the other lever without the player ever intentionally interacting with it. These issues were resolved by the end of our project.
 
-3 - Styling
+3 - Styling<br>
 The styling for the project was difficult because of the scale of the project. There were many different elements in the game that were able to be interacted with by the user, and making sure that the proper texture was loaded was a difficult task. The styling for the text took especially long, as giving the gold texture and making sure the shadows looked proper was tedious. The styling for the game came together to have a cave diving and treasure hunting theme, and all textures are properly loaded now (flipping levers, door opens when near it).
