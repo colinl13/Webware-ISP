@@ -1,8 +1,8 @@
-## Webware-ISP
+# Webware-ISP
 
 Made by Colin Lemire and Isabel Cruz Rivera
 
-## Earthboy: Journey Through the Cave
+# Earthboy: Journey Through the Cave
 
 https://webware-isp.onrender.com/
 ---
